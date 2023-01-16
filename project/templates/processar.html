@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Processar Compra{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h3>Item do Carrinho</h3>
+            <a href="{% url 'lojaapp:meucarro'%}" class="btn btn-warning btn-sm">
+                Atualizar Carrinho
+            </a>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cp in carro.carroproduto_set.all %}
+                <tr>
+                    <td>
+                        <img src="{{ cp.produto.image.url }}" alt="{{ cp.produto.nome }}" style="object-fit: cover;"
+                             class="img-fluid" width="70">
+                    </td>
+                    <td>{{ cp.produto.titulo }}</td>
+                    <td>R${{ cp.produto.preco }}</td>
+                    <td>{{ cp.quantidade }}</td>
+                    <td>R${{ cp.subtotal }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th colspan="4" class="text-end">
+                        Valor Total
+                    </th>
+                    <th>
+                        R$<span class="text-success">{{ carro.total }}</span>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-6">
+            <h3>Detalhes da Compra</h3>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+
+                <button class="btn btn-success">Comprar</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

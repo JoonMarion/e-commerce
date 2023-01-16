@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-3">
+    <a href="{% url 'lojaapp:home' %}" class="mx-2">Home</a>
+    <a href="{% url 'lojaapp:sobre' %}" class="mx-2">Sobre</a>
+    <a href="{% url 'lojaapp:contato' %}" class="mx-2">Contato</a>
+    <a href="{% url 'lojaapp:produtos' %}" class="mx-2">Categorias</a>
+    <a href="{% url 'lojaapp:meucarro' %}" class="mx-2">Carrinho</a>
+    <a href="{% url 'lojaapp:clienteregistrar' %}" class="mx-2">Cadastrar</a>
+</div>
+
+<hr>
+
+{% block content %}
+{% endblock content %}
+
+</body>
+</html>

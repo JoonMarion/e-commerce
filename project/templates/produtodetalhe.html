@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{produto.titulo}}{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <h2>Produto: {{produto.titulo}}</h2>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{produto.image.url}}" alt="{{produto.titulo}}" style="object-fit: cover;" class="img-fluid"
+                 width="300">
+        </div>
+        <div class="col-md-6">
+            <h4>
+                Categoria: {{produto.categoria}}
+            </h4>
+            <h3>
+                {{produto.titulo}}
+                {% if produto.visualizacao == 1 %}
+                ({{produto.visualizacao}} Visualização)
+                {% else %}
+                ({{produto.visualizacao}} Visualizações)
+                {% endif %}
+            </h3>
+            <p class="text-secondary">
+                {{produto.descricao}}
+            </p>
+            <p class="text-success">
+                Preço: R${{produto.preco}}
+            </p>
+            <a href="{% url 'lojaapp:addcarro' produto.id %}" class="btn btn-success">
+                Comprar
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
