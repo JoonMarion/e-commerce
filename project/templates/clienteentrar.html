@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <h3>Entrar</h3>
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Entrar</button>
+
+                {% if error  %}
+                <li style="color: red; list-style: none;"> {{ error }} </li>
+                {% endif %}
+            </form>
+
+            <p>Ainda não é cadastrado?
+                <a href="{% url 'lojaapp:clienteregistrar' %}">Cadastre-se</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

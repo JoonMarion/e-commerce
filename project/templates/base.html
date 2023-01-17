@@ -18,8 +18,11 @@
 
     {{ request.user.cliente.nome }}
 
+    <a href="{% url 'lojaapp:clientesair' %}" class="mx-2">Sair</a>
+
     {% else %}
 
+    <a href="{% url 'lojaapp:clienteentrar' %}" class="mx-2">Entrar</a>
     <a href="{% url 'lojaapp:clienteregistrar' %}" class="mx-2">Cadastrar</a>
 
     {% endif %}

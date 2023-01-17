@@ -1,5 +1,5 @@
-from django.shortcuts import redirect
-from django.views.generic import View, TemplateView, CreateView
+from django.shortcuts import redirect, render
+from django.views.generic import View, TemplateView, CreateView, FormView
 from django.urls import reverse_lazy
 from .forms import *
 from .models import *
@@ -187,6 +187,28 @@ class ClienteRegistrarView(CreateView):
         user = User.objects.create_user(username, email, password)
         form.instance.user = user
         login(self.request, user)
+        return super().form_valid(form)
+
+
+class ClienteSairView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('lojaapp:home')
+
+
+class ClienteEntrarView(FormView):
+    template_name = 'clienteentrar.html'
+    form_class = ClienteEntrarForm
+    success_url = reverse_lazy('lojaapp:home')
+
+    def form_valid(self, form):
+        uname = form.cleaned_data.get('username')
+        pword = form.cleaned_data.get('password')
+        usr = authenticate(username=uname, password=pword)
+        if usr is not None and usr.cliente:
+            login(self.request, usr)
+        else:
+            return render(self.request, self.template_name, {'form': self.form_class, 'error': 'Usuário ou senha inválidos'})
         return super().form_valid(form)
 
 

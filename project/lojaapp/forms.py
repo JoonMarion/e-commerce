@@ -51,3 +51,8 @@ class ClienteRegistrarForm(forms.ModelForm):
         if User.objects.filter(username=unome).exists():
             raise forms.ValidationError("Este usuário já existe")
         return unome
+
+
+class ClienteEntrarForm(forms.Form):
+    username = forms.CharField(widget=forms.TextInput())
+    password = forms.CharField(widget=forms.PasswordInput())

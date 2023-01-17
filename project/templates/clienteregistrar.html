@@ -19,6 +19,10 @@
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-primary">Cadastrar</button>
             </form>
+
+             <p>Já é cadastrado?
+                <a href="{% url 'lojaapp:clienteentrar' %}">Faça o login</a>
+            </p>
         </div>
     </div>
 </div>
