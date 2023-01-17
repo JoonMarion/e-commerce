@@ -7,7 +7,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-class HomeView(TemplateView):
+class LojaMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        carro_id = request.session.get("carro_id", None)
+        if carro_id:
+            carro_obj = Carro.objects.get(id=carro_id)
+            if request.user.is_authenticated and request.user.cliente:
+                carro_obj.cliente = request.user.cliente
+                carro_obj.save()
+        return super().dispatch(request, *args, **kwargs)
+
+
+class HomeView(LojaMixin, TemplateView):
     template_name = 'home.html'
 
     def get_context_data(self, **kwargs):
@@ -16,7 +27,7 @@ class HomeView(TemplateView):
         return context
 
 
-class TodosProdutosView(TemplateView):
+class TodosProdutosView(LojaMixin, TemplateView):
     template_name = 'todosprodutos.html'
 
     def get_context_data(self, **kwargs):
@@ -25,7 +36,7 @@ class TodosProdutosView(TemplateView):
         return context
 
 
-class ProdutoDetalheView(TemplateView):
+class ProdutoDetalheView(LojaMixin, TemplateView):
     template_name = 'produtodetalhe.html'
 
     def get_context_data(self, **kwargs):
@@ -38,7 +49,7 @@ class ProdutoDetalheView(TemplateView):
         return context
 
 
-class AddCarroView(TemplateView):
+class AddCarroView(LojaMixin, TemplateView):
     template_name = 'addprocarro.html'
 
     def get_context_data(self, **kwargs):
@@ -86,8 +97,8 @@ class AddCarroView(TemplateView):
         return context
 
 
-class ManipularCarroView(View):
-    def get(self, request, *args, **kwargs):
+class ManipularCarroView(LojaMixin, View):
+    def get(self, request):
         cp_id = self.kwargs['cp_id']
         acao = request.GET.get('acao')
         cp_obj = CarroProduto.objects.get(id=cp_id)
@@ -120,8 +131,8 @@ class ManipularCarroView(View):
         return redirect('lojaapp:meucarro')
 
 
-class LimparCarroView(View):
-    def get(self, request, *args, **kwargs):
+class LimparCarroView(LojaMixin, View):
+    def get(self, request):
         carro_id = request.session.get('carro_id', None)
         if carro_id:
             carro_obj = Carro.objects.get(id=carro_id)
@@ -131,7 +142,7 @@ class LimparCarroView(View):
         return redirect('lojaapp:meucarro')
 
 
-class MeuCarroView(TemplateView):
+class MeuCarroView(LojaMixin, TemplateView):
     template_name = 'meucarro.html'
 
     def get_context_data(self, **kwargs):
@@ -145,10 +156,17 @@ class MeuCarroView(TemplateView):
         return context
 
 
-class CheckoutView(CreateView):
+class CheckoutView(LojaMixin, CreateView):
     template_name = 'processar.html'
     form_class = Checar_PedidoForm
     success_url = reverse_lazy('lojaapp:home')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.cliente:
+            pass
+        else:
+            return redirect('/entrar/?next=/checkout/')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -189,6 +207,13 @@ class ClienteRegistrarView(CreateView):
         login(self.request, user)
         return super().form_valid(form)
 
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get('next')
+            return next_url
+        else:
+            return self.success_url
+
 
 class ClienteSairView(View):
     def get(self, request):
@@ -211,10 +236,17 @@ class ClienteEntrarView(FormView):
             return render(self.request, self.template_name, {'form': self.form_class, 'error': 'Usuário ou senha inválidos'})
         return super().form_valid(form)
 
+    def get_success_url(self):
+        if "next" in self.request.GET:
+            next_url = self.request.GET.get('next')
+            return next_url
+        else:
+            return self.success_url
 
-class SobreView(TemplateView):
+
+class SobreView(LojaMixin, TemplateView):
     template_name = 'sobre.html'
 
 
-class ContatoView(TemplateView):
+class ContatoView(LojaMixin, TemplateView):
     template_name = 'contato.html'

@@ -19,7 +19,7 @@
             </form>
 
             <p>Ainda não é cadastrado?
-                <a href="{% url 'lojaapp:clienteregistrar' %}">Cadastre-se</a>
+                <a href="{% url 'lojaapp:clienteregistrar' %}{% if request.GET.next %}?next={{request.GET.next}}{% endif %}">Cadastre-se</a>
             </p>
         </div>
     </div>
