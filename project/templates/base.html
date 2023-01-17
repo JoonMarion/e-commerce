@@ -13,7 +13,17 @@
     <a href="{% url 'lojaapp:contato' %}" class="mx-2">Contato</a>
     <a href="{% url 'lojaapp:produtos' %}" class="mx-2">Categorias</a>
     <a href="{% url 'lojaapp:meucarro' %}" class="mx-2">Carrinho</a>
+
+    {% if request.user.cliente %}
+
+    {{ request.user.cliente.nome }}
+
+    {% else %}
+
     <a href="{% url 'lojaapp:clienteregistrar' %}" class="mx-2">Cadastrar</a>
+
+    {% endif %}
+
 </div>
 
 <hr>

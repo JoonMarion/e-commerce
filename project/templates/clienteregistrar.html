@@ -3,17 +3,23 @@
 {% block title %}Cadastrar{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mx-auto">
-                <h3>Cadastrar</h3>
+<style>
+    .errorlist {
+        color: red;
+        list-style: none;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <h3>Cadastrar</h3>
 
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                </form>
-            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
         </div>
     </div>
+</div>
 {% endblock %}
