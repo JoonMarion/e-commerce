@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Pedido{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mx-auto">
+            <h3 class="text-center">Detalhes do Pedido</h3>
+            <hr>
+            <p><span class="fw-bold">PedidoID: </span>{{pedido_obj.id}}</p>
+            <p><span class="fw-bold">Valor: </span>R$ {{pedido_obj.total}}</p>
+            <p><span class="fw-bold">Data do Pedido: </span>{{pedido_obj.criado_em}}</p>
+            <p><span class="fw-bold">Status do Pedido: </span>{{pedido_obj.pedido_status}}</p>
+            <p><span class="fw-bold">Ordenado Por: </span>{{pedido_obj.ordenado_por}}</p>
+            <p><span class="fw-bold">Telefone Cliente: </span>{{pedido_obj.telefone}}</p>
+            <p><span class="fw-bold">Endereco Cliente: </span>{{pedido_obj.endereco_envio}}</p>
+            <p><span class="fw-bold">Email Cliente: </span>{{pedido_obj.email}}</p>
+            <hr>
+            <h3 class="text-center">Itens do Pedido</h3>
+            <hr>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Código</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Subtotal</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cp in pedido_obj.carro.carroproduto_set.all %}
+                <tr>
+                    <td><img src="{{cp.produto.image.url}}" alt="" width="50px"></td>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{cp.produto.titulo}}</td>
+                    <td>R$ {{cp.produto.preco}}</td>
+                    <td>{{cp.quantidade}}</td>
+                    <td>R$ {{cp.subtotal}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="5" class="text-end fw-bold">Valor Total:</td>
+                    <td>R$ {{pedido_obj.total}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

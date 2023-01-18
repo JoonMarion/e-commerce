@@ -17,7 +17,7 @@
     {% if request.user.cliente %}
 
     {{ request.user.cliente.nome }}
-
+    <a href="{% url 'lojaapp:clienteperfil' %}" class="mx-2">Meu Perfil</a>
     <a href="{% url 'lojaapp:clientesair' %}" class="mx-2">Sair</a>
 
     {% else %}

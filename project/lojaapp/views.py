@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from django.views.generic import View, TemplateView, CreateView, FormView
+from django.views.generic import View, TemplateView, CreateView, FormView, DetailView
 from django.urls import reverse_lazy
 from .forms import *
 from .models import *
@@ -98,7 +98,7 @@ class AddCarroView(LojaMixin, TemplateView):
 
 
 class ManipularCarroView(LojaMixin, View):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         cp_id = self.kwargs['cp_id']
         acao = request.GET.get('acao')
         cp_obj = CarroProduto.objects.get(id=cp_id)
@@ -250,3 +250,39 @@ class SobreView(LojaMixin, TemplateView):
 
 class ContatoView(LojaMixin, TemplateView):
     template_name = 'contato.html'
+
+
+class ClientePerfilView(TemplateView):
+    template_name = 'clienteperfil.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.cliente:
+            pass
+        else:
+            return redirect('/entrar/?next=/perfil/')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        cliente = self.request.user.cliente
+        context['cliente'] = cliente
+
+        pedidos = Pedido_order.objects.filter(carro__cliente=cliente)
+        context['pedidos'] = pedidos
+
+        return context
+
+
+class ClientePedidoDetalheView(DetailView):
+    template_name = 'clientepedidodetalhe.html'
+
+    model = Pedido_order
+    context_object_name = 'pedido_obj'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.cliente:
+            pass
+        else:
+            return redirect('/entrar/?next=/perfil/')
+        return super().dispatch(request, *args, **kwargs)
