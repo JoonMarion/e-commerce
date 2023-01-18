@@ -24,7 +24,13 @@
                     {{ p.descricao }}
                 </p>
                 <p>
+                    {% if p.preco_promocao %}
+                    <p class="fw-bold text-success">PROMOÇÃO</p>
+                    Preço: <strike>R$ {{ p.preco|intcomma }}</strike>
+                    R$ {{ p.preco_promocao|intcomma }}
+                    {% else %}
                     Preço: R$ {{ p.preco|intcomma }}
+                    {% endif %}
                 </p>
                 <a href="{% url 'lojaapp:addcarro' p.id %}" class="btn btn-success">
                     Comprar

@@ -19,7 +19,6 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Código</th>
                     <th>PedidoID</th>
                     <th>Valor</th>
                     <th>Data Pedido</th>
@@ -29,7 +28,6 @@
                 <tbody>
                 {% for pedido in pedidos %}
                 <tr>
-                    <td>{{forloop.counter}}</td>
                     <td><a href="{% url 'lojaapp:clientepedidodetalhe' pedido.id %}">Pedido_Número-{{pedido.id}}</a></td>
                     <td>R$ {{pedido.total}}</td>
                     <td>{{pedido.criado_em}}</td>

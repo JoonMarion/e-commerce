@@ -36,6 +36,7 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='produtos')
     preco = models.FloatField()
+    preco_promocao = models.FloatField(blank=True, null=True)
     descricao = models.TextField()
     visualizacao = models.PositiveIntegerField(default=0)
 

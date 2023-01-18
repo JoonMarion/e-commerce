@@ -24,8 +24,8 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Código</th>
                     <th>Produto</th>
+                    <th>ProdutoID</th>
                     <th>Preço</th>
                     <th>Quantidade</th>
                     <th>Subtotal</th>
@@ -35,8 +35,8 @@
                 {% for cp in pedido_obj.carro.carroproduto_set.all %}
                 <tr>
                     <td><img src="{{cp.produto.image.url}}" alt="" width="50px"></td>
-                    <td>{{forloop.counter}}</td>
-                    <td>{{cp.produto.titulo}}</td>
+                    <td><a href="{% url 'lojaapp:produtodetalhe' cp.produto.slug %}" target="blank">{{cp.produto.titulo}}</a></td>
+                    <td>{{cp.produto.id}}</td>
                     <td>R$ {{cp.produto.preco|intcomma}}</td>
                     <td>{{cp.quantidade}}</td>
                     <td>R$ {{cp.subtotal|intcomma}}</td>
