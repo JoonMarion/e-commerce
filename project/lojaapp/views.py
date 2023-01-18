@@ -289,3 +289,14 @@ class ClientePedidoDetalheView(DetailView):
         else:
             return redirect('/entrar/?next=/perfil/')
         return super().dispatch(request, *args, **kwargs)
+
+
+class AdminLoginView(FormView):
+    template_name = 'admin_paginas/adminlogin.html'
+    form_class = ClienteEntrarForm
+    success_url = reverse_lazy('lojaapp:adminhome')
+
+
+class AdminHomeView(TemplateView):
+    template_name = 'admin_paginas/adminhome.html'
+

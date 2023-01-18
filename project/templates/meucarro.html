@@ -26,7 +26,7 @@
                         <img src="{{ cp.produto.image.url }}" alt="{{ cp.produto.nome }}" style="object-fit: cover;"
                              class="img-fluid" width="70">
                     </td>
-                    <td>{{ cp.produto.titulo }}</td>
+                    <td><a href="{% url 'lojaapp:produtodetalhe' cp.produto.slug %}" target="blank">{{ cp.produto.titulo }}</a></td>
                     <td>R$ {{ cp.produto.preco|intcomma }}</td>
                     <td>{{ cp.quantidade }}</td>
                     <td>R$ {{ cp.subtotal|intcomma }}</td>

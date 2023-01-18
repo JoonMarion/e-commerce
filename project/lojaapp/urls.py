@@ -22,4 +22,7 @@ urlpatterns = [
     path("entrar/", ClienteEntrarView.as_view(), name='clienteentrar'),
     path("perfil/", ClientePerfilView.as_view(), name='clienteperfil'),
     path("perfil/pedido-<int:pk>/", ClientePedidoDetalheView.as_view(), name='clientepedidodetalhe'),
+
+    path("admin-login/", AdminLoginView.as_view(), name='adminlogin'),
+    path("admin-home/", AdminHomeView.as_view(), name='adminhome'),
 ]

@@ -22,6 +22,16 @@ class Cliente(models.Model):
         return self.nome
 
 
+class Admin(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='admins')
+    tel = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.user.username
+
+
 class Categoria(models.Model):
     titulo = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)

@@ -1,0 +1,6 @@
+{% extends 'admin_paginas/adminbase.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+{% endblock %}
