@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block title %}VaperBrasil - Página Inicial{% endblock %}
 
@@ -23,7 +24,7 @@
                     {{ p.descricao }}
                 </p>
                 <p>
-                    Preço: R$ {{ p.preco }}
+                    Preço: R$ {{ p.preco|intcomma }}
                 </p>
                 <a href="{% url 'lojaapp:addcarro' p.id %}" class="btn btn-success">
                     Comprar

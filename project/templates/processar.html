@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block title %}Processar Compra{% endblock %}
 
@@ -28,9 +29,9 @@
                              class="img-fluid" width="70">
                     </td>
                     <td>{{ cp.produto.titulo }}</td>
-                    <td>R${{ cp.produto.preco }}</td>
+                    <td>R$ {{ cp.produto.preco|intcomma }}</td>
                     <td>{{ cp.quantidade }}</td>
-                    <td>R${{ cp.subtotal }}</td>
+                    <td>R$ {{ cp.subtotal|intcomma }}</td>
                 </tr>
                 {% endfor %}
                 <tr>
@@ -38,7 +39,7 @@
                         Valor Total
                     </th>
                     <th>
-                        R$<span class="text-success">{{ carro.total }}</span>
+                        R$ <span class="text-success">{{ carro.total|intcomma }}</span>
                     </th>
                 </tr>
                 </tbody>

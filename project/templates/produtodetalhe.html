@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 
 {% block title %}{{produto.titulo}}{% endblock %}
 
@@ -29,7 +30,7 @@
                 {{produto.descricao}}
             </p>
             <p class="text-success">
-                Preço: R$ {{produto.preco}}
+                Preço: R$ {{produto.preco|intcomma}}
             </p>
             <a href="{% url 'lojaapp:addcarro' produto.id %}" class="btn btn-success">
                 Comprar
