@@ -23,15 +23,15 @@
                 <p>
                     {{ p.descricao }}
                 </p>
+                {% if p.promocao_preco_antigo %}
+                <p class="fw-bold text-success">PROMOÇÃO</p>
                 <p>
-                    {% if p.preco_promocao %}
-                    <p class="fw-bold text-success">PROMOÇÃO</p>
-                    Preço: <strike>R$ {{ p.preco|intcomma }}</strike>
-                    R$ {{ p.preco_promocao|intcomma }}
-                    {% else %}
-                    Preço: R$ {{ p.preco|intcomma }}
-                    {% endif %}
+                    Preço: <strike>R$ {{ p.promocao_preco_antigo|intcomma }}</strike>
+                    R$ {{ p.preco|intcomma }}
                 </p>
+                {% else %}
+                <p>Preço: R$ {{ p.preco|intcomma }}</p>
+                {% endif %}
                 <a href="{% url 'lojaapp:addcarro' p.id %}" class="btn btn-success">
                     Comprar
                 </a>

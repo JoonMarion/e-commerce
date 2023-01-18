@@ -29,9 +29,15 @@
             <p class="text-secondary">
                 {{produto.descricao}}
             </p>
-            <p class="text-success">
-                Preço: R$ {{produto.preco|intcomma}}
-            </p>
+            {% if produto.promocao_preco_antigo %}
+                <p class="fw-bold text-success">PROMOÇÃO</p>
+                <p>
+                    Preço: <strike>R$ {{ produto.promocao_preco_antigo|intcomma }}</strike>
+                    R$ {{ produto.preco|intcomma }}
+                </p>
+                {% else %}
+                <p>Preço: R$ {{ produto.preco|intcomma }}</p>
+                {% endif %}
             <a href="{% url 'lojaapp:addcarro' produto.id %}" class="btn btn-success">
                 Comprar
             </a>
